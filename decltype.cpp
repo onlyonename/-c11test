@@ -96,6 +96,58 @@ void test4()
 }
 
 
+
+//函数返回值后置,语法的演进
+
+// 1
+template<typename R, typename T, typename U>
+R add(T t, U u)
+{
+	return t + u;
+}
+
+int t = 1;
+float u = 2.4;
+auto c = add<decltype(t + u)>(t, u);	//缺点,得了解add函数实现细节,否则很难写出decltype(t + u)作为模板参数
+
+// 2 这种语法虽然直观,但编译不通过,编译器扫描到t和u时,t和u还没定义
+/*
+template<typename T, typename U>
+decltype(t + u) add(T t, U u)
+{
+	return t + u;
+}
+*/
+
+// 3 这是第2种方案的优化,缺点是,T和U必须有无参构造函数,否则会报错
+template<typename T, typename U>
+decltype(T() + U()) add(T t, U u)
+{
+	return t + u;
+}
+
+// 4 这是对3的改进,常见的技巧,缺点是晦涩
+template<typename T, typename U>
+decltype((*(T*)0) + (*(U*)0)) add(T t, U u)
+{
+	return t + u;
+}
+
+// 5 c11新增的语法,返回类型后置.其实个人感觉,1和5差不多
+template<typename T, typename U>
+auto add(T t, U u) -> decltype(t + u)
+{
+	return t + u;
+}
+	
+
+
+
+
+
+
+
+
 //在main函数之前执行
 __attribute__((constructor)) void before_main()
 {
