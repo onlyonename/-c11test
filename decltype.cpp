@@ -96,8 +96,7 @@ void test4()
 }
 
 
-
-//函数返回值后置,语法的演进
+//=========函数返回值后置,语法的演进============
 
 // 1
 template<typename R, typename T, typename U>
@@ -140,11 +139,7 @@ auto add(T t, U u) -> decltype(t + u)
 	return t + u;
 }
 	
-
-
-
-
-
+//=====================
 
 
 
