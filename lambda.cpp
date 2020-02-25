@@ -15,6 +15,10 @@ int main()
 	auto f = [] (int a) -> int { return a + 1;};
 	cout << f(1) << endl;
 
+	//lambda表达式的__FUNCTION__是operator(),可以看出,lambda的实现上,其实也是一个类,重载了operator()
+	auto ff = [] (int a) -> int {cout << __FUNCTION__ << endl; return a + 1;};
+	cout << ff(2) << endl;
+
 	//没有参数时,可以省略参数符号
 	auto f1 = []() -> string { return "hello";};
 	cout << f1() << endl;
